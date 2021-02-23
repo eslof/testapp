@@ -20,17 +20,17 @@ ma = Marshmallow(app)
 Session = scoped_session(sessionmaker(autoflush=True, autocommit=False, bind=db.engine))
 
 
-@contextmanager
-def session_scope():
-    session = Session()
-    try:
-        yield session
-        session.commit()
-    except:
-        session.rollback()
-        raise
-    finally:
-        session.close()
+#@contextmanager
+#def session_scope():
+#    session = Session()
+#    try:
+#        yield session
+#        session.commit()
+#    except:
+#        session.rollback()
+#        raise
+#    finally:
+#        session.close()
 
 
 class Auth(db.Model):
