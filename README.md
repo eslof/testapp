@@ -1,4 +1,4 @@
-dist/app.pyz contains a portable python zipapp with all requirements included should only need python 3 interpreter  
+dist/app.zip contains a python 'portable' zipapp and all requirements included should only need python 3 interpreter  
   
 Usage: python app.pyz --help  
 to start the flask/swagger: python app.pyz serve  
