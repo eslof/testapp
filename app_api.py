@@ -57,5 +57,5 @@ class TransferAPI(Resource):
 
 
 def run_app():
-    api.init_app(app)
+    api.init_app(app, add_specs=False)
     app.run()
