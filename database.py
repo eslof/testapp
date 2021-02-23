@@ -11,10 +11,17 @@ from sqlalchemy import func
 from flaskapp import app
 from flask_restplus import fields
 
-root_path = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+# region fixes access of db file from -mzipapp .pyz
+root_path = os.path.dirname(os.path.realpath(__file__))
+if os.path.splitext(root_path)[1] == ".pyz":
+    root_path = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+
 db_path = os.path.join(root_path, 'ledger.sqlite')
 db_uri = 'sqlite:///{}'.format(db_path)
+
 app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
+# endregion
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 db = SQLAlchemy(app)

@@ -6,7 +6,11 @@ import os
 import os.path
 
 # region fixes serving of swagger interface files from -mzipapp .pyz
-template_folder=os.path.join(os.path.dirname(os.path.dirname( os.path.realpath( __file__ ))), "templates")
+root_path = os.path.dirname(os.path.realpath(__file__))
+if os.path.splitext(root_path)[1] == ".pyz":
+    root_path = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+template_folder = os.path.join(root_path, "templates")
+
 app = Flask(__name__, template_folder=template_folder)
 
 
