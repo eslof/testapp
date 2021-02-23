@@ -1,3 +1,4 @@
+import os
 import werkzeug
 werkzeug.cached_property = werkzeug.utils.cached_property
 
@@ -10,7 +11,10 @@ from sqlalchemy import func
 from flaskapp import app
 from flask_restplus import fields
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///ledger.sqlite'
+root_path = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+db_path = os.path.join(root_path, 'ledger.sqlite')
+db_uri = 'sqlite:///{}'.format(db_path)
+app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 db = SQLAlchemy(app)
