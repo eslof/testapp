@@ -1,4 +1,5 @@
 dist/app.zip contains a python 'portable' zipapp and all requirements included should only need python 3 interpreter  
+running build.py will install requirements into testapp and reproduce dist/app.zip
   
 Usage: python app.pyz --help  
 to start the flask/swagger: python app.pyz serve  
