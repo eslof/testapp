@@ -3,7 +3,6 @@ import werkzeug
 werkzeug.cached_property = werkzeug.utils.cached_property
 
 from sqlalchemy.orm import sessionmaker, scoped_session
-from sqlalchemy.util.compat import contextmanager
 
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
@@ -12,36 +11,17 @@ from flaskapp import app
 from flask_restplus import fields
 
 # region fixes access of db file from -mzipapp .pyz
-root_path = os.path.dirname(os.path.realpath(__file__))
-if os.path.splitext(root_path)[1] == ".pyz":
-    root_path = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
-
+root_path = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 db_path = os.path.join(root_path, 'ledger.sqlite')
 db_uri = 'sqlite:///{}'.format(db_path)
-
-app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
 # endregion
 
+app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
-
-
 Session = scoped_session(sessionmaker(autoflush=True, autocommit=False, bind=db.engine))
-
-
-#@contextmanager
-#def session_scope():
-#    session = Session()
-#    try:
-#        yield session
-#        session.commit()
-#    except:
-#        session.rollback()
-#        raise
-#    finally:
-#        session.close()
 
 
 class Auth(db.Model):

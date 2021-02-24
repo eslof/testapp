@@ -57,16 +57,13 @@ def do_transaction(s: Session, amount: int, first_party: User, second_party: Use
 def validate_token(s: Session, token: str) -> Optional[str]:
     try:
         result = AuthSchema().dump(s.query(Auth.user).filter(Auth.expire > datetime.utcnow()).filter(Auth.token == token).order_by(Auth.expire.desc()).first())
+        return result['user']
     except:
         return None
-
-    return result['user']
 
 
 def get_user(s: Session, name: str) -> Optional[User]:
     try:
-        result = UserSchema().dump(s.query(User).filter(User.name == name).order_by(User.version.desc()).first())
+        return UserSchema().dump(s.query(User).filter(User.name == name).order_by(User.version.desc()).first())
     except:
         return None
-
-    return result

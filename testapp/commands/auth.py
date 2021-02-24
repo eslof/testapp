@@ -74,8 +74,6 @@ def generate_token() -> str:
 
 def get_user(s: Session, name: str) -> Optional[User]:
     try:
-        result = UserSchema().dump(s.query(User).filter(User.name == name).order_by(User.version.desc()).first())
+        return UserSchema().dump(s.query(User).filter(User.name == name).order_by(User.version.desc()).first())
     except:
         return None
-
-    return result
